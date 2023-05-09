@@ -53,7 +53,7 @@ public class PageController {
     }
    
     
-      @RequestMapping("/pageInsertion")
+      @RequestMapping("/pageInsertion-des-nouveaux-information-sur-les-IA")
     public String pageInsertion()
     {
         return "insertion";
@@ -125,6 +125,21 @@ public class PageController {
           session.setAttribute("idAdmin", idAdmin);
        
         return "liste";
+    }
+      @RequestMapping("/liste-de-tout-les-info-de-IA-front")
+    public String listefront(Model model,HttpSession session,
+        HttpServletResponse response) throws IOException, Exception {
+        PrintWriter out = response.getWriter();
+        ArrayList<Information> listeInform = new ArrayList<>();
+        listeInform = GenericDAO.findBySql(new Information(), "select*from information", new Econnect().connexion());
+         for (Information information : listeInform) {
+             information.setUrl();
+         }
+    
+          model.addAttribute("listeInform", listeInform);
+         
+       
+        return "listefront";
     }
     
      
